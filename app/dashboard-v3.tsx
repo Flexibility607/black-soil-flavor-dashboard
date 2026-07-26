@@ -223,7 +223,7 @@ export default function DashboardV3() {
           <article className="loop-map">
             <div className="loop-map__intro">
               <div>
-                <h2>产销协同链路</h2>
+                <h2><strong>产销</strong><span>协同链路</span></h2>
               </div>
             </div>
 
@@ -256,18 +256,17 @@ export default function DashboardV3() {
               </div>
             </aside>
 
-            <div className="feedback-line">
-              <span>经营数据回流生产计划</span>
-              <i aria-hidden="true" />
-            </div>
           </article>
 
           <div className="detail-grid">
             <article className="panel capacity-panel">
               <PanelTitle title="企业产能与订单构成" meta="Top 8 产能" />
               <div className="capacity-list">
-                {companies.map((company) => (
-                  <div className="capacity-row" key={company.name}>
+                {companies.map((company, index) => (
+                  <div
+                    className={`capacity-row capacity-row--${Math.min(index + 1, 6)}`}
+                    key={company.name}
+                  >
                     <strong>{company.name}</strong>
                     <span>{company.category}</span>
                     <i>
@@ -335,8 +334,8 @@ export default function DashboardV3() {
                       <div className={`task-row ${isAlert ? "task-row--alert" : ""}`} key={task.id}>
                         <strong>{task.id}</strong>
                         <span>{task.route}<small>{task.vehicle}</small></span>
-                        <span className="route-nodes" aria-label="五个配送路径节点">
-                          <i /><i /><i /><i /><i />
+                        <span className="route-nodes" aria-label="起点、装车、在途、交接、到达五个路径节点">
+                          <i>起</i><i>装</i><i>途</i><i>交</i><i>达</i>
                         </span>
                         <em>{task.status}</em>
                       </div>
