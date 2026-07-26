@@ -2,6 +2,13 @@
   {
     "date": "2026-07-26",
     "macrostructure": "Map / Diagram",
+    "theme": "Terminal dual-mode",
+    "enrichment": "CSS data-flow",
+    "brief": "昼夜双主题与产销动态协同链路修正"
+  },
+  {
+    "date": "2026-07-26",
+    "macrostructure": "Map / Diagram",
     "theme": "Terminal",
     "enrichment": "none",
     "brief": "黑土寻味产销闭环大屏 · 技术感去 AI 化重设计"

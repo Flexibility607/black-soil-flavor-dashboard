@@ -3,20 +3,20 @@
 import { useEffect, useMemo, useState } from "react";
 
 type Tone = "green" | "amber" | "blue" | "red";
+type Theme = "night" | "day";
 
 const metrics: Array<{
   label: string;
   value: string;
   unit: string;
-  note: string;
   tone: Tone;
 }> = [
-  { label: "入园企业", value: "18", unit: "家", note: "覆盖 8 类食品加工", tone: "green" },
-  { label: "今日可用产能", value: "8,730", unit: "kg", note: "滚动采集", tone: "green" },
-  { label: "未来 72 小时需求", value: "4,480", unit: "kg", note: "8 笔协同需求", tone: "amber" },
-  { label: "近 7 日承接订单", value: "11,180", unit: "kg", note: "峰值 1,900 kg", tone: "green" },
-  { label: "当前运输任务", value: "8", unit: "项", note: "6 正常 · 2 需关注", tone: "blue" },
-  { label: "近 7 日已结算", value: "48.63", unit: "万元", note: "CNY · 已结算", tone: "amber" },
+  { label: "入园企业", value: "18", unit: "家", tone: "green" },
+  { label: "今日可用产能", value: "8,730", unit: "kg", tone: "green" },
+  { label: "未来 72 小时需求", value: "4,480", unit: "kg", tone: "amber" },
+  { label: "近 7 日承接订单", value: "11,180", unit: "kg", tone: "green" },
+  { label: "当前运输任务", value: "8", unit: "项", tone: "blue" },
+  { label: "近 7 日已结算", value: "48.63", unit: "万元", tone: "amber" },
 ];
 
 const stages: Array<{
@@ -55,6 +55,11 @@ const shares = [
   { label: "A08", value: 6.8 },
   { label: "A09", value: 5.7 },
   { label: "A10", value: 4.7 },
+];
+
+const shareGroups = [
+  ...shares.slice(0, 5),
+  { label: "其余企业", value: 33.5 },
 ];
 
 const days = ["07-19", "07-20", "07-21", "07-22", "07-23", "07-24", "07-25"];
@@ -128,14 +133,21 @@ function TrendBars({
 
 export default function DashboardV3() {
   const [scale, setScale] = useState(1);
+  const [theme, setTheme] = useState<Theme>("night");
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     const resize = () => {
       setScale(Math.min(window.innerWidth / 1920, window.innerHeight / 1080));
     };
+    const syncFullscreen = () => setIsFullscreen(Boolean(document.fullscreenElement));
     resize();
     window.addEventListener("resize", resize);
-    return () => window.removeEventListener("resize", resize);
+    document.addEventListener("fullscreenchange", syncFullscreen);
+    return () => {
+      window.removeEventListener("resize", resize);
+      document.removeEventListener("fullscreenchange", syncFullscreen);
+    };
   }, []);
 
   const dashboardStyle = useMemo(
@@ -143,12 +155,24 @@ export default function DashboardV3() {
     [scale],
   );
 
+  const toggleFullscreen = async () => {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+      return;
+    }
+    await document.documentElement.requestFullscreen();
+  };
+
   return (
-    <main className="screen">
-      <section className="dashboard-v3" style={dashboardStyle} aria-label="黑土寻味·产销闭环大屏">
+    <main className="screen" data-theme={theme}>
+      <section className="dashboard-v3" style={dashboardStyle} data-theme={theme} aria-label="黑土寻味·产销闭环大屏">
         <header className="masthead">
           <div className="identity">
-            <span className="identity__mark" aria-hidden="true">土</span>
+            <span className="identity__mark" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
             <div>
               <strong>黑土寻味</strong>
               <span>园区 E02 · 绿色食品产业协同</span>
@@ -156,12 +180,30 @@ export default function DashboardV3() {
           </div>
           <div className="masthead__title">
             <h1>黑土寻味·产销闭环</h1>
-            <p>生产、订单、物流与结算的同屏调度视图</p>
           </div>
           <div className="masthead__status">
-            <span><i /> 数据链路正常</span>
-            <strong>2026.07.25&nbsp;&nbsp;16:30</strong>
-            <small>演示数据 · 30 秒同步周期</small>
+            <div className="masthead__status-top">
+              <span className="masthead__health"><i /> 数据链路正常</span>
+              <div className="masthead__controls" aria-label="大屏控制">
+                <button type="button" onClick={toggleFullscreen}>
+                  {isFullscreen ? "退出全屏" : "全屏"}
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={theme === "day"}
+                  onClick={() => setTheme((current) => current === "night" ? "day" : "night")}
+                >
+                  {theme === "night" ? "开灯" : "关灯"}
+                </button>
+                <button type="button" onClick={() => window.location.reload()}>
+                  刷新
+                </button>
+              </div>
+            </div>
+            <div className="time-lockup" aria-label="2026 年 7 月 25 日 16 点 30 分">
+              <strong>16:30</strong>
+              <span>2026<br />07.25</span>
+            </div>
           </div>
         </header>
 
@@ -173,7 +215,6 @@ export default function DashboardV3() {
                 <strong>{metric.value}</strong>
                 <span>{metric.unit}</span>
               </div>
-              <small>{metric.note}</small>
             </article>
           ))}
         </section>
@@ -182,12 +223,7 @@ export default function DashboardV3() {
           <article className="loop-map">
             <div className="loop-map__intro">
               <div>
-                <h2>一条链看清供给到回款</h2>
-                <p>今日供给稳定，未来需求集中在速冻、净菜与粮油品类。</p>
-              </div>
-              <div className="loop-map__summary">
-                <span>未来 72 小时需求</span>
-                <strong>4,480<small>kg</small></strong>
+                <h2>产销协同链路</h2>
               </div>
             </div>
 
@@ -209,10 +245,20 @@ export default function DashboardV3() {
               ))}
             </div>
 
+            <aside className="loop-map__signals" aria-label="关键协同信号">
+              <div className="signal-card signal-card--demand">
+                <span>未来 72 小时需求</span>
+                <strong>4,480<small>kg</small></strong>
+              </div>
+              <div className="signal-card signal-card--alert">
+                <span>运输任务需关注</span>
+                <strong>2<small>项</small></strong>
+              </div>
+            </aside>
+
             <div className="feedback-line">
               <span>经营数据回流生产计划</span>
               <i aria-hidden="true" />
-              <strong>2 项运输任务需关注</strong>
             </div>
           </article>
 
@@ -237,19 +283,21 @@ export default function DashboardV3() {
                   <span>10 家企业 · 11,180 kg</span>
                 </div>
                 <div className="share-bar" aria-label="企业订单占比">
-                  {shares.map((share, index) => (
+                  {shareGroups.map((share, index) => (
                     <i
-                      className={`share-bar__item share-bar__item--${(index % 5) + 1}`}
+                      className={`share-bar__item share-bar__item--${index + 1}`}
                       style={{ "--share": `${share.value}%` } as React.CSSProperties}
                       key={share.label}
                     />
                   ))}
                 </div>
                 <div className="share-legend">
-                  {shares.slice(0, 5).map((share) => (
-                    <span key={share.label}><i />{share.label} {share.value}%</span>
+                  {shareGroups.map((share, index) => (
+                    <span key={share.label}>
+                      <i className={`share-legend__key share-legend__key--${index + 1}`} />
+                      {share.label} {share.value}%
+                    </span>
                   ))}
-                  <span>其余企业 33.5%</span>
                 </div>
               </div>
             </article>
