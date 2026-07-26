@@ -24,10 +24,22 @@ a {
   inset: 0;
   overflow: clip;
   background:
-    linear-gradient(var(--color-grid) var(--rule-hairline), transparent var(--rule-hairline)),
-    linear-gradient(90deg, var(--color-grid) var(--rule-hairline), transparent var(--rule-hairline)),
+    radial-gradient(
+      ellipse at 50% 42%,
+      color-mix(in oklch, var(--color-accent) 14%, transparent),
+      transparent 44%
+    ),
+    radial-gradient(
+      ellipse at 76% 30%,
+      color-mix(in oklch, var(--color-blue) 7%, transparent),
+      transparent 30%
+    ),
+    radial-gradient(
+      ellipse at 12% 82%,
+      color-mix(in oklch, var(--color-amber) 6%, transparent),
+      transparent 28%
+    ),
     var(--color-paper);
-  background-size: var(--space-xl) var(--space-xl);
 }
 
 .screen[data-theme="day"] {
@@ -70,7 +82,19 @@ a {
   overflow: clip;
   transform: translate(-50%, -50%) scale(var(--dashboard-scale));
   transform-origin: center;
-  background: var(--color-paper);
+  isolation: isolate;
+  background:
+    radial-gradient(
+      ellipse at 50% 34%,
+      color-mix(in oklch, var(--color-accent) 10%, transparent),
+      transparent 40%
+    ),
+    linear-gradient(
+      145deg,
+      var(--color-paper),
+      var(--color-paper-2) 52%,
+      var(--color-paper)
+    );
   color: var(--color-ink);
   font-family: var(--font-body);
   font-size: var(--text-base);
@@ -80,9 +104,28 @@ a {
 .dashboard-v3::before {
   position: absolute;
   inset: 0;
+  z-index: 2;
   pointer-events: none;
   content: "";
   border: var(--rule-hairline) solid var(--color-rule);
+}
+
+.dashboard-v3::after {
+  position: absolute;
+  inset: -18% -5%;
+  z-index: -1;
+  pointer-events: none;
+  content: "";
+  background: repeating-radial-gradient(
+    ellipse at 48% 108%,
+    transparent 0 var(--space-3xl),
+    color-mix(in oklch, var(--color-accent) 6%, transparent) calc(var(--space-3xl) + var(--rule-hairline))
+      calc(var(--space-3xl) + var(--rule-strong)),
+    transparent calc(var(--space-3xl) + var(--space-2xs))
+      calc(var(--space-4xl) - var(--space-md))
+  );
+  opacity: 0.72;
+  transform: rotate(-2deg);
 }
 
 .masthead {
@@ -176,6 +219,18 @@ a {
   letter-spacing: -0.035em;
   line-height: 1.05;
   overflow-wrap: anywhere;
+}
+
+.screen:not([data-theme="day"]) .masthead__title h1,
+.screen:not([data-theme="day"]) .metric__value strong,
+.screen:not([data-theme="day"]) .loop-map__intro h2 span,
+.screen:not([data-theme="day"]) .loop-stage strong,
+.screen:not([data-theme="day"]) .panel-title h2,
+.screen:not([data-theme="day"]) .time-lockup strong {
+  color: var(--color-ink);
+  text-shadow:
+    0 0 var(--space-xs) color-mix(in oklch, var(--color-accent) 22%, transparent),
+    0 0 var(--space-lg) color-mix(in oklch, var(--color-blue) 10%, transparent);
 }
 
 .masthead__status {
@@ -403,6 +458,33 @@ a {
   align-items: center;
   padding: var(--space-lg);
   overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 50% 64%,
+      color-mix(in oklch, var(--color-accent) 11%, transparent),
+      transparent 60%
+    ),
+    linear-gradient(160deg, var(--color-paper-3), var(--color-paper-2));
+}
+
+.loop-map::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(var(--space-4xl) - var(--space-sm));
+  z-index: 2;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklch, var(--color-blue) 14%, transparent),
+    transparent
+  );
+  opacity: 0;
+  transform: translateX(-220%) skewX(-16deg);
+  animation: map-sweep calc(var(--dur-long) * 21) var(--ease-in-out) infinite;
 }
 
 .loop-map::after {
@@ -410,18 +492,23 @@ a {
   inset: 0;
   pointer-events: none;
   content: "";
-  background:
-    linear-gradient(var(--color-grid) var(--rule-hairline), transparent var(--rule-hairline)),
-    linear-gradient(90deg, var(--color-grid) var(--rule-hairline), transparent var(--rule-hairline));
-  background-size: var(--space-lg) var(--space-lg);
-  opacity: 0.55;
+  background: repeating-radial-gradient(
+    ellipse at 48% 118%,
+    transparent 0 var(--space-3xl),
+    color-mix(in oklch, var(--color-accent) 7%, transparent) calc(var(--space-3xl) + var(--rule-hairline))
+      calc(var(--space-3xl) + var(--rule-strong)),
+    transparent calc(var(--space-3xl) + var(--space-2xs))
+      calc(var(--space-4xl) - var(--space-md))
+  );
+  opacity: 0.8;
+  transform: rotate(-1deg) scaleX(1.08);
 }
 
 .loop-map__intro,
 .loop-map__path,
 .loop-map__signals {
   position: relative;
-  z-index: 1;
+  z-index: 3;
 }
 
 .loop-map__intro {
@@ -505,22 +592,54 @@ a {
 }
 
 .loop-stage__node {
+  position: relative;
   display: block;
-  width: var(--space-lg);
-  height: var(--space-lg);
+  width: var(--space-3xl);
+  height: var(--space-3xl);
   margin-bottom: var(--space-xs);
-  border: var(--rule-strong) solid var(--stage-color);
+  border: var(--rule-hairline) solid var(--stage-color);
   border-radius: 50%;
-  background: radial-gradient(
-    circle at 34% 28%,
-    var(--color-ink) 0,
-    var(--stage-color) 18%,
-    var(--color-paper-3) 48%,
-    var(--stage-color) 56%,
-    var(--color-paper-2) 70%
-  );
-  outline: var(--rule-hairline) solid var(--color-rule-strong);
-  outline-offset: var(--space-2xs);
+  background:
+    radial-gradient(
+      circle at 42% 38%,
+      color-mix(in oklch, var(--color-ink) 38%, transparent),
+      transparent 24%
+    ),
+    linear-gradient(
+      145deg,
+      color-mix(in oklch, var(--stage-color) 28%, transparent),
+      var(--color-paper-3)
+    );
+  box-shadow:
+    0 0 0 var(--space-xs) color-mix(in oklch, var(--stage-color) 5%, transparent),
+    0 0 0 var(--space-sm) color-mix(in oklch, var(--color-blue) 3%, transparent),
+    0 0 var(--space-xl) color-mix(in oklch, var(--stage-color) 24%, transparent);
+}
+
+.loop-stage__node::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--space-md);
+  height: var(--space-md);
+  content: "";
+  border: calc(var(--rule-strong) + var(--rule-hairline)) solid var(--stage-color);
+  border-radius: 50%;
+  background: var(--color-paper-2);
+  box-shadow: 0 0 var(--space-sm) var(--stage-color);
+  transform: translate(-50%, -50%);
+}
+
+.loop-stage__node::after {
+  position: absolute;
+  top: 21%;
+  left: 28%;
+  width: var(--space-xs);
+  height: var(--space-xs);
+  content: "";
+  border-radius: 50%;
+  background: color-mix(in oklch, var(--color-ink) 72%, transparent);
+  opacity: 0.72;
 }
 
 .loop-stage h3 {
@@ -555,65 +674,64 @@ a {
 .loop-stage__connector {
   position: relative;
   flex: 1 1 auto;
-  height: var(--space-2xs);
+  align-self: flex-start;
+  height: var(--rule-strong);
+  margin-top: var(--space-xl);
   margin-inline: var(--space-xs);
   overflow: hidden;
   border-radius: var(--radius-chip);
-  background: linear-gradient(
-    180deg,
-    var(--color-paper-4) 0,
-    var(--color-rule-strong) 36%,
-    var(--color-ink-2) 50%,
-    var(--color-rule-strong) 64%,
-    var(--color-paper-4) 100%
-  );
+  background: linear-gradient(90deg, var(--color-accent-strong), var(--color-blue));
+  box-shadow: 0 0 var(--space-sm) color-mix(in oklch, var(--color-blue) 18%, transparent);
+  opacity: 0.72;
 }
 
 .loop-stage__connector::before {
   position: absolute;
   inset: 0 auto 0 0;
-  width: 38%;
+  top: calc(var(--rule-hairline) * -1);
+  bottom: auto;
+  width: 24%;
+  height: calc(var(--rule-strong) + var(--space-2xs));
   content: "";
   border-radius: var(--radius-chip);
   background: linear-gradient(
     90deg,
-    transparent 0,
-    var(--color-accent-strong) 16%,
-    var(--color-ink) 38%,
-    var(--color-accent) 50%,
-    var(--color-ink) 62%,
-    var(--color-accent-strong) 84%,
-    transparent 100%
+    transparent,
+    color-mix(in oklch, var(--color-ink) 92%, transparent),
+    transparent
   );
-  box-shadow: 0 0 var(--space-sm) var(--color-accent-strong);
+  box-shadow: 0 0 var(--space-md) color-mix(in oklch, var(--color-ink) 36%, transparent);
   opacity: 0;
-  animation: connector-flow calc(var(--dur-long) * 4) linear infinite;
+  animation: connector-flow calc(var(--dur-long) * 19) var(--ease-in-out) infinite;
 }
 
 .loop-stage__connector::after {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  width: var(--space-xs);
-  height: var(--space-xs);
-  content: "";
-  border: var(--rule-hairline) solid var(--color-ink-2);
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, var(--color-ink), var(--color-accent) 44%, var(--color-accent-dark) 72%);
-  box-shadow: 0 0 var(--space-xs) var(--color-accent-strong);
-  transform: translateY(-50%);
+  display: none;
+  content: none;
+}
+
+.loop-stage-wrap:nth-child(2) .loop-stage__connector {
+  background: linear-gradient(90deg, var(--color-accent), var(--color-amber));
+}
+
+.loop-stage-wrap:nth-child(3) .loop-stage__connector {
+  background: linear-gradient(90deg, var(--color-amber), var(--color-danger));
+}
+
+.loop-stage-wrap:nth-child(4) .loop-stage__connector {
+  background: linear-gradient(90deg, var(--color-danger), var(--color-blue));
 }
 
 .loop-stage-wrap:nth-child(2) .loop-stage__connector::before {
-  animation-delay: calc(var(--dur-long) * -1);
+  animation-delay: 0ms;
 }
 
 .loop-stage-wrap:nth-child(3) .loop-stage__connector::before {
-  animation-delay: calc(var(--dur-long) * -2);
+  animation-delay: 0ms;
 }
 
 .loop-stage-wrap:nth-child(4) .loop-stage__connector::before {
-  animation-delay: calc(var(--dur-long) * -3);
+  animation-delay: 0ms;
 }
 
 .loop-map__signals {
@@ -1261,15 +1379,32 @@ a {
 @keyframes connector-flow {
   0% {
     opacity: 0;
-    transform: translateX(0);
+    transform: translateX(-110%);
   }
-  18%,
-  78% {
+  15%,
+  80% {
     opacity: 1;
   }
   100% {
     opacity: 0;
-    transform: translateX(258%);
+    transform: translateX(420%);
+  }
+}
+
+@keyframes map-sweep {
+  0%,
+  14% {
+    opacity: 0;
+    transform: translateX(-220%) skewX(-16deg);
+  }
+  22%,
+  74% {
+    opacity: 1;
+  }
+  84%,
+  100% {
+    opacity: 0;
+    transform: translateX(2400%) skewX(-16deg);
   }
 }
 
