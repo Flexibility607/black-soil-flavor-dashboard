@@ -1,0 +1,41 @@
+{
+  "scanned_at": "2026-07-26",
+  "scope": "single-page",
+  "framework": {
+    "name": "vinext / Next.js app router",
+    "evidence": "package.json scripts and app/page.tsx"
+  },
+  "styling": {
+    "entry": "app/globals.css",
+    "tailwind": "Tailwind CSS 4.2.1",
+    "existing_tokens": "ad-hoc CSS variables mixed with raw hex values"
+  },
+  "motion": {
+    "library": null,
+    "stance": "motion-cut"
+  },
+  "design_system": {
+    "design_md": null,
+    "hallmark_stamp": null,
+    "hallmark_log": null
+  },
+  "preserve": [
+    "1920x1080 scaled dashboard shell",
+    "black-soil dark green brand direction",
+    "six primary operating metrics",
+    "supply-to-settlement information architecture",
+    "user-supplied demo dataset"
+  ],
+  "replace": [
+    "decorative English node kickers",
+    "generic glow, scanline, coordinates and corner brackets",
+    "uniform card rhythm",
+    "small low-contrast supporting text"
+  ],
+  "introduce": [
+    "OKLCH token system",
+    "Map / Diagram macrostructure",
+    "tabular information modules",
+    "selectively restored order-share, transport-resource and policy-observation data"
+  ]
+}

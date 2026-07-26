@@ -1,5 +1,7 @@
 "use client";
 
+/*
+
 import { useEffect, useMemo, useState } from "react";
 
 const metrics = [
@@ -314,3 +316,6 @@ export default function Home() {
     </main>
   );
 }
+*/
+
+export { default } from "./dashboard-v3";

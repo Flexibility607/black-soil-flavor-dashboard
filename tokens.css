@@ -1,0 +1,70 @@
+/* Hallmark · genre: atmospheric · macrostructure: Map / Diagram · theme: Terminal · tone: technical · anchor hue: black-soil green · nav: N9 · footer: Ft2 · critique: P5 H5 E4 S5 R4 V5 · contrast: pass (40–41) · slop: pass (42–49) */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Tomorrow:wght@400;600;700&display=swap");
+
+:root {
+  --color-paper: oklch(11% 0.022 154);
+  --color-paper-2: oklch(14% 0.025 154);
+  --color-paper-3: oklch(17% 0.028 154);
+  --color-paper-4: oklch(21% 0.03 154);
+  --color-rule: oklch(29% 0.035 154);
+  --color-rule-strong: oklch(39% 0.052 154);
+  --color-grid: oklch(23% 0.028 154);
+  --color-ink: oklch(95% 0.018 145);
+  --color-ink-2: oklch(80% 0.032 148);
+  --color-muted: oklch(65% 0.034 150);
+  --color-weak: oklch(48% 0.036 153);
+  --color-accent: oklch(79% 0.17 151);
+  --color-accent-strong: oklch(69% 0.15 151);
+  --color-accent-dark: oklch(26% 0.07 151);
+  --color-amber: oklch(82% 0.15 84);
+  --color-amber-dark: oklch(25% 0.06 84);
+  --color-blue: oklch(78% 0.105 222);
+  --color-blue-dark: oklch(25% 0.045 222);
+  --color-danger: oklch(72% 0.18 28);
+  --color-danger-dark: oklch(25% 0.06 28);
+  --color-focus: oklch(88% 0.16 151);
+
+  --font-display: "Tomorrow", "Microsoft YaHei", sans-serif;
+  --font-body: "IBM Plex Sans", "Microsoft YaHei", sans-serif;
+
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 2.5rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.25rem;
+  --text-lg: 1.5625rem;
+  --text-xl: 1.953rem;
+  --text-2xl: 2.441rem;
+  --text-3xl: 3.052rem;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+
+  --rule-hairline: 1px;
+  --rule-strong: 2px;
+  --radius-panel: 0.25rem;
+  --radius-chip: 0.1875rem;
+
+  --screen-width: 1920px;
+  --screen-height: 1080px;
+  --page-pad: 1.5rem;
+  --header-height: 5rem;
+  --metrics-height: 6.5rem;
+  --footer-height: 1.5rem;
+  --map-height: 15.625rem;
+  --detail-height: 33.125rem;
+}
