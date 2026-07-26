@@ -1,6 +1,4 @@
 /* Hallmark · genre: atmospheric · macrostructure: Map / Diagram · theme: Terminal · tone: technical · anchor hue: black-soil green · nav: N9 · footer: Ft2 · critique: P5 H5 E4 S5 R4 V5 · contrast: pass (40–41) · slop: pass (42–49) */
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&family=Tomorrow:wght@400;600;700&display=swap");
-
 :root {
   --color-paper: oklch(11% 0.022 154);
   --color-paper-2: oklch(14% 0.025 154);

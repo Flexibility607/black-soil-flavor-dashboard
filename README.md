@@ -1,98 +1,78 @@
-# vinext-starter
+# 黑土寻味·产销闭环
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+面向黑土地绿色食品产业的产销协同大屏，以供给能力、订单趋势、冷链履约、运输告警和经营结果为核心，提供 1920 × 1080 的静态可视化展示。
 
-## Prerequisites
+## 在线预览
 
-- Node.js `>=22.13.0`
+- GitHub Pages：<https://flexibility607.github.io/black-soil-flavor-dashboard/>
+- Sites 部署：<https://black-soil-flavor-loop.deep-hill-3942.chatgpt.site>
 
-## Quick Start
+## 页面特点
+
+- 深色科技农业视觉体系，使用荧光绿、琥珀金和冰蓝建立信息层级
+- 关键经营指标、产销闭环流程、企业产能、订单趋势和运输状态集中展示
+- 适配 1920 × 1080 大屏，并可根据浏览器窗口等比缩放
+- 当前为纯静态演示数据，无需后端服务
+
+## 本地运行
+
+需要 Node.js `>=22.13.0`。
 
 ```bash
 npm install
 npm run dev
+```
+
+构建并检查 Sites/Vinext 版本：
+
+```bash
 npm run build
 ```
 
-This starter does not use `wrangler.jsonc`.
+构建 GitHub Pages 静态版本：
 
-## Included Shape
+```bash
+# macOS / Linux
+GITHUB_PAGES=true NEXT_PUBLIC_BASE_PATH=/black-soil-flavor-dashboard npm run build:pages
 
-- edit site code under `app/`
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
-
-## Workspace Auth Headers
-
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
-
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
-
-Treat the full name as optional and fall back to email when it is absent:
-
-```tsx
-import { headers } from "next/headers";
-
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
-
-  const displayName = fullName ?? email;
-  // ...
-}
+# Windows PowerShell
+$env:GITHUB_PAGES="true"
+$env:NEXT_PUBLIC_BASE_PATH="/black-soil-flavor-dashboard"
+npm run build:pages
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+静态文件会输出到 `out/`。
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
+## GitHub Pages 自动部署
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
+仓库使用 `.github/workflows/deploy-pages.yml` 自动发布：
 
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
+1. 向 `main` 分支推送代码。
+2. GitHub Actions 安装依赖并生成静态站点。
+3. 构建成功后自动部署到 GitHub Pages。
 
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
+可在仓库的 **Actions** 页面查看构建过程，在 **Settings → Pages** 查看最终地址。首次启用时，Pages 的构建来源应选择 **GitHub Actions**。
 
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
+## 主要命令
 
-## Useful Commands
+| 命令 | 用途 |
+| --- | --- |
+| `npm run dev` | 启动本地开发环境 |
+| `npm run build` | 构建 Sites/Vinext 版本 |
+| `npm run build:pages` | 导出 GitHub Pages 静态版本 |
+| `npm test` | 构建并运行页面检查 |
+| `npm run lint` | 运行代码规范检查 |
 
-- `npm run dev`: start local development
-- `npm run build`: verify the vinext build output
-- `npm test`: build the starter and verify its rendered loading skeleton
-- `npm run db:generate`: generate Drizzle migrations after schema changes
+## 项目结构
 
-## Learn More
+```text
+app/                    页面与样式
+public/                 静态资源
+.github/workflows/      GitHub Pages 自动部署
+tests/                  渲染结果检查
+.openai/hosting.json    Sites 部署配置
+```
 
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+## 数据说明
+
+页面中的企业、订单、销售额、运输任务及政策信息均为静态演示数据，仅用于界面展示，不代表真实业务数据。
