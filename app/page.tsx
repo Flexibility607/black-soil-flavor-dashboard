@@ -120,7 +120,7 @@ export default function Home() {
           </div>
 
           <div className="title-block">
-            <span className="eyebrow">黑土地绿色食品产业协同大屏</span>
+            <span className="eyebrow">BLACK SOIL DATA HUB&nbsp;&nbsp;/&nbsp;&nbsp;黑土地绿色食品产业协同大屏</span>
             <h1>黑土寻味·产销闭环</h1>
           </div>
 
@@ -156,16 +156,21 @@ export default function Home() {
         <section className="hero-chain" aria-labelledby="chain-title">
           <div className="hero-topline">
             <div>
-              <span className="section-kicker">INDUSTRY COLLABORATION</span>
+              <span className="section-kicker">DATA CORE 01 / INDUSTRY COLLABORATION</span>
               <h2 id="chain-title">黑土产销协同脉络</h2>
             </div>
             <p>
-              供给、订单、履约与经营结果形成一条可追溯闭环
-              <strong>2 项运输任务需要关注</strong>
+              <span>供给、订单、履约与经营结果形成一条可追溯闭环</span>
+              <strong><i />2 项运输任务需要关注</strong>
             </p>
           </div>
 
           <div className="furrow-canvas" aria-label="从供给到结算的产业协同流程">
+            <div className="signal-ruler" aria-hidden="true">
+              <span>N43° 52&apos; / BLACK SOIL PARK</span>
+              <span>5 DATA NODES · SYNC 30S</span>
+              <span>FLOW STATUS / ACTIVE</span>
+            </div>
             <div className="furrow-line furrow-line-one" />
             <div className="furrow-line furrow-line-two" />
             <div className="furrow-line furrow-line-three" />
@@ -201,7 +206,7 @@ export default function Home() {
           <article className="panel capacity-panel">
             <div className="panel-heading">
               <div>
-                <span className="section-kicker">SUPPLY CAPACITY</span>
+                <span className="section-kicker">DATA NODE 02 / SUPPLY CAPACITY</span>
                 <h2>重点企业可用产能</h2>
               </div>
               <span className="soft-badge">Top 6 占比 84.3%</span>
@@ -225,7 +230,7 @@ export default function Home() {
           <article className="panel trend-panel">
             <div className="panel-heading">
               <div>
-                <span className="section-kicker">SEVEN-DAY PULSE</span>
+                <span className="section-kicker">DATA NODE 03 / SEVEN-DAY PULSE</span>
                 <h2>订单与经营脉动</h2>
               </div>
               <span className="soft-badge">近 7 日</span>
@@ -261,7 +266,7 @@ export default function Home() {
           <article className="panel demand-panel">
             <div className="panel-heading">
               <div>
-                <span className="section-kicker">UPCOMING DEMAND</span>
+                <span className="section-kicker">DATA NODE 04 / UPCOMING DEMAND</span>
                 <h2>未来 72 小时协同计划</h2>
               </div>
               <span className="soft-badge gold-badge">4,480 kg</span>

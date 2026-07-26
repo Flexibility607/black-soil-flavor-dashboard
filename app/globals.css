@@ -6,11 +6,13 @@
   --soil-850: #051812;
   --soil-800: #08231a;
   --soil-750: #0b2b21;
-  --soil-line: rgba(100, 218, 157, 0.15);
-  --soil-line-strong: rgba(100, 218, 157, 0.28);
+  --soil-line: rgba(89, 240, 180, 0.19);
+  --soil-line-strong: rgba(75, 220, 244, 0.36);
   --green: #65dfa3;
   --green-deep: #2fab73;
   --green-soft: #b8f3d5;
+  --electric: #59f0b4;
+  --cyan: #4bdcf4;
   --gold: #f0b95b;
   --gold-soft: #f8d990;
   --blue: #6bc3d5;
@@ -53,7 +55,8 @@ button {
   inset: 0;
   overflow: hidden;
   background:
-    radial-gradient(circle at 50% 42%, rgba(24, 104, 72, 0.22), transparent 42%),
+    radial-gradient(circle at 50% 42%, rgba(25, 134, 103, 0.26), transparent 42%),
+    radial-gradient(circle at 74% 34%, rgba(75, 220, 244, 0.07), transparent 28%),
     radial-gradient(circle at 12% 80%, rgba(144, 104, 38, 0.08), transparent 26%),
     #010805;
 }
@@ -73,11 +76,11 @@ button {
   transform: translate(-50%, -50%) scale(var(--dashboard-scale));
   transform-origin: center center;
   background:
-    linear-gradient(rgba(61, 168, 114, 0.024) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(61, 168, 114, 0.02) 1px, transparent 1px),
-    radial-gradient(circle at 50% 34%, rgba(26, 126, 85, 0.12), transparent 38%),
+    linear-gradient(rgba(89, 240, 180, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(75, 220, 244, 0.03) 1px, transparent 1px),
+    radial-gradient(circle at 50% 34%, rgba(40, 169, 121, 0.16), transparent 38%),
     linear-gradient(145deg, #03100c, #041710 52%, #020c08);
-  background-size: 72px 72px, 72px 72px, auto, auto;
+  background-size: 48px 48px, 48px 48px, auto, auto;
   isolation: isolate;
 }
 
@@ -115,7 +118,9 @@ button {
   position: relative;
   border: 1px solid var(--soil-line);
   background: var(--panel);
-  box-shadow: inset 0 1px 0 rgba(226, 255, 239, 0.025);
+  box-shadow:
+    inset 0 1px 0 rgba(226, 255, 239, 0.045),
+    0 0 24px rgba(19, 118, 83, 0.035);
 }
 
 .topbar {
@@ -125,8 +130,21 @@ button {
   padding: 0 22px;
   border-radius: 16px;
   background:
-    linear-gradient(90deg, rgba(9, 48, 35, 0.86), rgba(4, 33, 24, 0.92)),
+    linear-gradient(90deg, rgba(9, 49, 36, 0.94), rgba(4, 31, 24, 0.96)),
     var(--panel);
+}
+
+.topbar::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  background:
+    linear-gradient(var(--cyan), var(--cyan)) left top / 24px 1px no-repeat,
+    linear-gradient(var(--cyan), var(--cyan)) left top / 1px 15px no-repeat,
+    linear-gradient(var(--electric), var(--electric)) right bottom / 24px 1px no-repeat,
+    linear-gradient(var(--electric), var(--electric)) right bottom / 1px 15px no-repeat;
+  opacity: 0.52;
 }
 
 .topbar::after {
@@ -136,8 +154,8 @@ button {
   right: 35%;
   bottom: -1px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--green), transparent);
-  box-shadow: 0 0 16px rgba(101, 223, 163, 0.48);
+  background: linear-gradient(90deg, transparent, var(--cyan), var(--electric), transparent);
+  box-shadow: 0 0 18px rgba(75, 220, 244, 0.56);
 }
 
 .brand {
@@ -151,11 +169,14 @@ button {
   height: 54px;
   display: grid;
   place-items: center;
-  border-radius: 14px 14px 20px 14px;
+  border: 1px solid rgba(222, 255, 240, 0.55);
+  border-radius: 8px 18px 8px 18px;
   color: #082017;
   background:
     linear-gradient(145deg, #98f0c3, #58d795);
-  box-shadow: 0 0 24px rgba(101, 223, 163, 0.18);
+  box-shadow:
+    0 0 24px rgba(89, 240, 180, 0.25),
+    inset 0 0 0 4px rgba(3, 17, 13, 0.12);
 }
 
 .brand-mark span {
@@ -171,14 +192,14 @@ button {
 }
 
 .brand strong {
-  font-family: "Source Han Serif SC", "SimSun", serif;
-  font-size: 24px;
-  letter-spacing: 0.08em;
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
 }
 
 .brand small {
   margin-top: 5px;
-  color: var(--green);
+  color: var(--cyan);
   font-size: 10px;
   letter-spacing: 0.32em;
 }
@@ -189,18 +210,42 @@ button {
 
 .eyebrow,
 .section-kicker {
-  color: var(--green);
+  color: var(--cyan);
+  font-family: "DIN Alternate", "Arial Narrow", monospace;
   font-size: 10px;
-  letter-spacing: 0.24em;
+  letter-spacing: 0.18em;
 }
 
 .title-block h1 {
-  margin: 5px 0 0;
-  font-family: "Source Han Serif SC", "STSong", "SimSun", serif;
-  font-size: 34px;
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  text-shadow: 0 3px 20px rgba(74, 213, 143, 0.11);
+  position: relative;
+  margin: 2px 0 0;
+  color: #ecfff6;
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: 0.13em;
+  text-shadow:
+    0 0 8px rgba(89, 240, 180, 0.5),
+    0 0 28px rgba(75, 220, 244, 0.22);
+}
+
+.title-block h1::before,
+.title-block h1::after {
+  content: "";
+  position: absolute;
+  top: 51%;
+  width: 68px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan));
+}
+
+.title-block h1::before {
+  right: calc(100% + 20px);
+}
+
+.title-block h1::after {
+  left: calc(100% + 20px);
+  transform: scaleX(-1);
 }
 
 .topbar-status {
@@ -265,10 +310,11 @@ button {
   align-items: center;
   gap: 8px;
   border: 1px solid rgba(101, 223, 163, 0.24);
-  border-radius: 10px;
+  border-radius: 4px;
   color: var(--green-soft);
   background: rgba(101, 223, 163, 0.065);
   cursor: pointer;
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
   transition: background 180ms ease, border-color 180ms ease;
 }
 
@@ -294,6 +340,18 @@ button {
   overflow: hidden;
   background:
     linear-gradient(180deg, rgba(12, 52, 39, 0.82), rgba(7, 35, 26, 0.78));
+}
+
+.metric-strip::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  left: 20px;
+  right: 20px;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--electric), var(--cyan), transparent);
+  box-shadow: 0 0 12px rgba(89, 240, 180, 0.5);
 }
 
 .metric {
@@ -322,15 +380,17 @@ button {
   align-items: center;
   justify-content: space-between;
   color: var(--muted);
-  font-size: 13px;
+  color: #a9ccb9;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .metric-heading i {
-  width: 20px;
+  width: 26px;
   height: 2px;
   border-radius: 2px;
   background: var(--green);
-  box-shadow: 0 0 8px currentColor;
+  box-shadow: 0 0 12px currentColor;
 }
 
 .metric-number {
@@ -342,21 +402,24 @@ button {
 
 .metric-number strong {
   font-family: "DIN Alternate", "Arial Narrow", monospace;
-  font-size: 31px;
+  color: #ecfff6;
+  font-size: 38px;
+  font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.04em;
 }
 
 .metric-number span {
-  color: var(--muted);
-  font-size: 14px;
+  color: #8fc8ad;
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .metric small {
   display: block;
   margin-top: 4px;
-  color: var(--weak);
-  font-size: 10px;
+  color: #6f9e88;
+  font-size: 11px;
 }
 
 .metric-gold .metric-heading i {
@@ -377,11 +440,25 @@ button {
 
 .hero-chain {
   padding: 20px 22px 16px;
-  border-radius: 18px;
+  border-color: rgba(75, 220, 244, 0.22);
+  border-radius: 10px;
   overflow: hidden;
   background:
     radial-gradient(ellipse at 50% 64%, rgba(32, 138, 92, 0.15), transparent 58%),
     linear-gradient(160deg, rgba(8, 42, 31, 0.93), rgba(4, 27, 20, 0.88));
+}
+
+.hero-chain::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  top: 76px;
+  bottom: 18px;
+  width: 84px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(75, 220, 244, 0.1), transparent);
+  transform: skewX(-16deg);
+  animation: core-scan 9s ease-in-out infinite;
 }
 
 .hero-chain::after {
@@ -405,21 +482,39 @@ button {
 .hero-topline h2,
 .panel-heading h2 {
   margin: 4px 0 0;
-  font-size: 20px;
-  font-weight: 650;
+  font-size: 23px;
+  font-weight: 800;
   letter-spacing: 0.03em;
 }
 
 .hero-topline p {
-  margin: 5px 0 0;
+  margin: 1px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 18px;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .hero-topline p strong {
-  margin-left: 18px;
-  color: var(--gold-soft);
-  font-weight: 600;
+  height: 30px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(239, 107, 99, 0.28);
+  border-radius: 4px;
+  color: #ffd0cc;
+  background: rgba(239, 107, 99, 0.08);
+  font-weight: 700;
+}
+
+.hero-topline p strong i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 12px var(--red);
 }
 
 .furrow-canvas {
@@ -429,6 +524,28 @@ button {
   top: 78px;
   bottom: 16px;
   overflow: hidden;
+  background:
+    linear-gradient(rgba(75, 220, 244, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(89, 240, 180, 0.03) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.signal-ruler {
+  position: absolute;
+  z-index: 3;
+  left: 18px;
+  right: 18px;
+  top: 5px;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(131, 218, 183, 0.52);
+  font-family: monospace;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+}
+
+.signal-ruler span:last-child {
+  color: rgba(75, 220, 244, 0.72);
 }
 
 .furrow-line {
@@ -442,16 +559,16 @@ button {
 }
 
 .furrow-line-one {
-  top: 22px;
+  top: 34px;
 }
 
 .furrow-line-two {
-  top: 46px;
+  top: 58px;
   border-color: rgba(240, 185, 91, 0.055);
 }
 
 .furrow-line-three {
-  top: 70px;
+  top: 82px;
   border-color: rgba(107, 195, 213, 0.05);
 }
 
@@ -459,7 +576,7 @@ button {
   position: absolute;
   left: 48px;
   right: 48px;
-  top: 44px;
+  top: 58px;
   height: 170px;
   display: flex;
   align-items: center;
@@ -472,8 +589,8 @@ button {
 .stage {
   position: relative;
   z-index: 2;
-  width: 170px;
-  flex: 0 0 170px;
+  width: 182px;
+  flex: 0 0 182px;
   text-align: center;
 }
 
@@ -481,32 +598,32 @@ button {
   position: absolute;
   top: -3px;
   left: 22px;
-  color: rgba(151, 207, 178, 0.34);
+  color: rgba(75, 220, 244, 0.66);
   font-family: monospace;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .stage-orb {
   position: relative;
-  width: 66px;
-  height: 66px;
+  width: 74px;
+  height: 74px;
   margin: 0 auto 10px;
   display: grid;
   place-items: center;
-  border: 1px solid rgba(101, 223, 163, 0.36);
-  border-radius: 50% 44% 50% 42%;
+  border: 1px solid rgba(89, 240, 180, 0.55);
+  border-radius: 50%;
   background:
     radial-gradient(circle at 42% 38%, rgba(168, 248, 204, 0.34), transparent 24%),
     linear-gradient(145deg, rgba(49, 173, 112, 0.24), rgba(4, 32, 23, 0.9));
   box-shadow:
-    0 0 0 9px rgba(101, 223, 163, 0.035),
-    0 0 28px rgba(101, 223, 163, 0.12);
-  transform: rotate(4deg);
+    0 0 0 7px rgba(101, 223, 163, 0.035),
+    0 0 0 14px rgba(75, 220, 244, 0.018),
+    0 0 34px rgba(89, 240, 180, 0.18);
 }
 
 .stage-orb i {
-  width: 14px;
-  height: 14px;
+  width: 17px;
+  height: 17px;
   border: 3px solid var(--green);
   border-radius: 50%;
   background: var(--soil-900);
@@ -520,21 +637,24 @@ button {
 }
 
 .stage-label {
-  color: var(--muted);
-  font-size: 13px;
+  color: #b7d7c6;
+  font-size: 15px;
+  font-weight: 700;
 }
 
 .stage strong {
   margin-top: 5px;
   font-family: "DIN Alternate", "Arial Narrow", sans-serif;
-  font-size: 21px;
+  color: #effff7;
+  font-size: 26px;
+  font-weight: 800;
   letter-spacing: 0.01em;
 }
 
 .stage small {
   margin-top: 4px;
-  color: var(--weak);
-  font-size: 10px;
+  color: #73a58e;
+  font-size: 11px;
 }
 
 .stage-gold .stage-orb {
@@ -595,11 +715,12 @@ button {
 
 .track-segment {
   position: relative;
-  height: 1px;
+  height: 2px;
   flex: 1;
   min-width: 72px;
   margin: -48px -7px 0;
-  background: linear-gradient(90deg, rgba(101, 223, 163, 0.3), rgba(101, 223, 163, 0.72));
+  background: linear-gradient(90deg, rgba(89, 240, 180, 0.35), rgba(75, 220, 244, 0.82));
+  box-shadow: 0 0 11px rgba(75, 220, 244, 0.22);
 }
 
 .track-segment::after {
@@ -680,9 +801,9 @@ button {
 }
 
 .hero-insight strong {
-  color: var(--green-soft);
-  font-size: 12px;
-  font-weight: 500;
+  color: #e8fff4;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .bottom-grid {
@@ -694,28 +815,70 @@ button {
 
 .panel {
   padding: 16px 18px;
-  border-radius: 16px;
+  border-color: rgba(75, 220, 244, 0.16);
+  border-radius: 8px;
   overflow: hidden;
   background:
     linear-gradient(160deg, rgba(8, 41, 31, 0.9), rgba(5, 28, 21, 0.85));
 }
 
+.panel::before,
+.panel::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 26px;
+  height: 18px;
+  pointer-events: none;
+}
+
+.panel::before {
+  left: -1px;
+  top: -1px;
+  border-left: 2px solid var(--cyan);
+  border-top: 2px solid var(--cyan);
+  box-shadow: -2px -2px 12px rgba(75, 220, 244, 0.12);
+}
+
+.panel::after {
+  right: -1px;
+  bottom: -1px;
+  border-right: 2px solid var(--electric);
+  border-bottom: 2px solid var(--electric);
+  box-shadow: 2px 2px 12px rgba(89, 240, 180, 0.12);
+}
+
 .panel-heading {
   align-items: center;
   padding-bottom: 10px;
-  border-bottom: 1px solid rgba(101, 223, 163, 0.09);
+  border-bottom: 1px solid rgba(75, 220, 244, 0.12);
 }
 
 .panel-heading h2 {
-  font-size: 16px;
+  position: relative;
+  padding-left: 12px;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+}
+
+.panel-heading h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 3px;
+  width: 3px;
+  background: linear-gradient(var(--cyan), var(--electric));
+  box-shadow: 0 0 10px rgba(75, 220, 244, 0.5);
 }
 
 .soft-badge {
   height: 24px;
   border-color: rgba(101, 223, 163, 0.13);
-  color: var(--muted);
-  background: rgba(101, 223, 163, 0.05);
-  font-size: 9px;
+  color: #a9d7c0;
+  background: rgba(75, 220, 244, 0.055);
+  font-size: 10px;
+  font-weight: 700;
 }
 
 .gold-badge {
@@ -737,12 +900,12 @@ button {
   grid-template-columns: 88px 1fr 72px;
   align-items: center;
   gap: 8px;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .capacity-meta strong {
-  color: var(--green-soft);
-  font-size: 11px;
+  color: #d8ffeb;
+  font-size: 12px;
 }
 
 .capacity-meta span {
@@ -750,14 +913,14 @@ button {
 }
 
 .capacity-meta b {
-  color: var(--text);
+  color: #effff7;
   font-family: "DIN Alternate", "Arial Narrow", sans-serif;
   font-weight: 500;
   text-align: right;
 }
 
 .capacity-rail {
-  height: 4px;
+  height: 5px;
   margin-top: 5px;
   overflow: hidden;
   border-radius: 9px;
@@ -769,7 +932,7 @@ button {
   height: 100%;
   border-radius: inherit;
   background: linear-gradient(90deg, var(--green-deep), var(--green-soft));
-  box-shadow: 0 0 8px rgba(101, 223, 163, 0.28);
+  box-shadow: 0 0 12px rgba(89, 240, 180, 0.36);
 }
 
 .trend-layout {
@@ -792,13 +955,15 @@ button {
 }
 
 .trend-title span {
-  color: var(--muted);
-  font-size: 11px;
+  color: #afd4c1;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .trend-title strong {
   font-family: "DIN Alternate", "Arial Narrow", sans-serif;
-  font-size: 20px;
+  color: #effff7;
+  font-size: 23px;
 }
 
 .trend-title small {
@@ -828,14 +993,14 @@ button {
 
 .trend-value,
 .trend-day {
-  color: var(--weak);
+  color: #759f8b;
   font-family: "DIN Alternate", "Arial Narrow", sans-serif;
-  font-size: 8px;
+  font-size: 9px;
 }
 
 .trend-rail {
   position: relative;
-  width: 15px;
+  width: 18px;
   height: 100%;
   display: flex;
   align-items: flex-end;
@@ -847,7 +1012,7 @@ button {
   width: 100%;
   border-radius: 9px 9px 2px 2px;
   background: linear-gradient(180deg, var(--green-soft), rgba(47, 171, 115, 0.24));
-  box-shadow: 0 0 12px rgba(101, 223, 163, 0.14);
+  box-shadow: 0 0 16px rgba(89, 240, 180, 0.24);
 }
 
 .trend-gold .trend-rail {
@@ -900,9 +1065,9 @@ button {
 }
 
 .schedule-time strong {
-  color: var(--green-soft);
+  color: #d9ffeb;
   font-family: "DIN Alternate", "Arial Narrow", sans-serif;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .schedule-time span {
@@ -928,20 +1093,20 @@ button {
 }
 
 .schedule-detail strong {
-  color: var(--text);
-  font-size: 10px;
+  color: #effff7;
+  font-size: 11px;
 }
 
 .schedule-detail span {
   margin-top: 2px;
   color: var(--weak);
-  font-size: 8px;
+  font-size: 9px;
 }
 
 .schedule-row > b {
   color: var(--gold-soft);
   font-family: "DIN Alternate", "Arial Narrow", sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   text-align: right;
 }
@@ -960,7 +1125,8 @@ button {
   border-radius: 9px;
   color: #eeb0ac;
   background: rgba(239, 107, 99, 0.055);
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .alert-heading strong {
@@ -992,14 +1158,14 @@ button {
 .alert-item strong {
   margin-top: 3px;
   color: #f3d5d1;
-  font-size: 9px;
+  font-size: 10px;
 }
 
 .alert-item small {
   margin-top: 3px;
   overflow: hidden;
   color: #9f7772;
-  font-size: 7px;
+  font-size: 8px;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -1029,6 +1195,23 @@ button {
   border-radius: 50%;
   background: var(--green);
   box-shadow: 0 0 9px var(--green);
+}
+
+@keyframes core-scan {
+  0%,
+  14% {
+    left: -10%;
+    opacity: 0;
+  }
+  22%,
+  74% {
+    opacity: 1;
+  }
+  84%,
+  100% {
+    left: 106%;
+    opacity: 0;
+  }
 }
 
 @keyframes data-flow {
