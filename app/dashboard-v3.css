@@ -680,9 +680,13 @@ a {
   margin-inline: var(--space-xs);
   overflow: visible;
   border-radius: var(--radius-chip);
-  background: linear-gradient(90deg, var(--color-accent-strong), var(--color-blue));
-  box-shadow: 0 0 var(--space-sm) color-mix(in oklch, var(--color-blue) 18%, transparent);
+  background: linear-gradient(90deg, var(--flow-start), var(--flow-end));
+  box-shadow: 0 0 var(--space-sm) color-mix(in oklch, var(--flow-end) 18%, transparent);
+  clip-path: inset(calc(var(--space-md) * -1) 0);
   opacity: 0.84;
+  --flow-start: var(--color-accent-strong);
+  --flow-end: var(--color-blue);
+  --flow-core: color-mix(in oklch, var(--flow-start) 52%, var(--flow-end));
 }
 
 .loop-stage__connector::before {
@@ -696,29 +700,16 @@ a {
   border-radius: var(--radius-chip);
   background: radial-gradient(
     ellipse at center,
-    var(--color-ink) 0 18%,
-    var(--color-accent) 34%,
-    var(--color-blue) 58%,
+    var(--flow-core) 0 18%,
+    var(--flow-start) 34%,
+    var(--flow-end) 58%,
     transparent 84%
   );
   box-shadow:
-    0 0 var(--space-sm) color-mix(in oklch, var(--color-accent) 56%, transparent),
-    0 0 var(--space-xl) color-mix(in oklch, var(--color-blue) 32%, transparent);
+    0 0 var(--space-sm) color-mix(in oklch, var(--flow-start) 56%, transparent),
+    0 0 var(--space-xl) color-mix(in oklch, var(--flow-end) 32%, transparent);
   opacity: 0;
   animation: connector-flow calc(var(--dur-long) * 19) var(--ease-in-out) infinite;
-}
-
-.screen[data-theme="day"] .loop-stage__connector::before {
-  background: radial-gradient(
-    ellipse at center,
-    var(--color-focus) 0 18%,
-    var(--color-accent) 36%,
-    var(--color-blue) 60%,
-    transparent 86%
-  );
-  box-shadow:
-    0 0 var(--space-sm) color-mix(in oklch, var(--color-accent) 64%, transparent),
-    0 0 var(--space-xl) color-mix(in oklch, var(--color-blue) 38%, transparent);
 }
 
 .loop-stage__connector::after {
@@ -727,15 +718,18 @@ a {
 }
 
 .loop-stage-wrap:nth-child(2) .loop-stage__connector {
-  background: linear-gradient(90deg, var(--color-accent), var(--color-amber));
+  --flow-start: var(--color-accent);
+  --flow-end: var(--color-amber);
 }
 
 .loop-stage-wrap:nth-child(3) .loop-stage__connector {
-  background: linear-gradient(90deg, var(--color-amber), var(--color-danger));
+  --flow-start: var(--color-amber);
+  --flow-end: var(--color-danger);
 }
 
 .loop-stage-wrap:nth-child(4) .loop-stage__connector {
-  background: linear-gradient(90deg, var(--color-danger), var(--color-blue));
+  --flow-start: var(--color-danger);
+  --flow-end: var(--color-blue);
 }
 
 .loop-stage-wrap:nth-child(2) .loop-stage__connector::before {
