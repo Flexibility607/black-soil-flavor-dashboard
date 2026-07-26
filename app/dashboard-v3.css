@@ -678,31 +678,47 @@ a {
   height: var(--rule-strong);
   margin-top: var(--space-xl);
   margin-inline: var(--space-xs);
-  overflow: hidden;
+  overflow: visible;
   border-radius: var(--radius-chip);
   background: linear-gradient(90deg, var(--color-accent-strong), var(--color-blue));
   box-shadow: 0 0 var(--space-sm) color-mix(in oklch, var(--color-blue) 18%, transparent);
-  opacity: 0.72;
+  opacity: 0.84;
 }
 
 .loop-stage__connector::before {
   position: absolute;
   inset: 0 auto 0 0;
-  top: calc(var(--rule-hairline) * -1);
+  top: calc((var(--space-xs) - var(--rule-strong) - var(--rule-hairline)) * -1);
   bottom: auto;
-  width: 24%;
-  height: calc(var(--rule-strong) + var(--space-2xs));
+  width: 52%;
+  height: var(--space-sm);
   content: "";
   border-radius: var(--radius-chip);
-  background: linear-gradient(
-    90deg,
-    transparent,
-    color-mix(in oklch, var(--color-ink) 92%, transparent),
-    transparent
+  background: radial-gradient(
+    ellipse at center,
+    var(--color-ink) 0 18%,
+    var(--color-accent) 34%,
+    var(--color-blue) 58%,
+    transparent 84%
   );
-  box-shadow: 0 0 var(--space-md) color-mix(in oklch, var(--color-ink) 36%, transparent);
+  box-shadow:
+    0 0 var(--space-sm) color-mix(in oklch, var(--color-accent) 56%, transparent),
+    0 0 var(--space-xl) color-mix(in oklch, var(--color-blue) 32%, transparent);
   opacity: 0;
   animation: connector-flow calc(var(--dur-long) * 19) var(--ease-in-out) infinite;
+}
+
+.screen[data-theme="day"] .loop-stage__connector::before {
+  background: radial-gradient(
+    ellipse at center,
+    var(--color-focus) 0 18%,
+    var(--color-accent) 36%,
+    var(--color-blue) 60%,
+    transparent 86%
+  );
+  box-shadow:
+    0 0 var(--space-sm) color-mix(in oklch, var(--color-accent) 64%, transparent),
+    0 0 var(--space-xl) color-mix(in oklch, var(--color-blue) 38%, transparent);
 }
 
 .loop-stage__connector::after {
@@ -1379,7 +1395,7 @@ a {
 @keyframes connector-flow {
   0% {
     opacity: 0;
-    transform: translateX(-110%);
+    transform: translateX(-105%);
   }
   15%,
   80% {
@@ -1387,7 +1403,7 @@ a {
   }
   100% {
     opacity: 0;
-    transform: translateX(420%);
+    transform: translateX(230%);
   }
 }
 
