@@ -4,8 +4,10 @@ import handler from "vinext/server/app-router-entry";
 
 interface Env {
   ASSETS: Fetcher;
-  DB: D1Database;
-  IMAGES: {
+  DB?: D1Database;
+  BACKEND_API_BASE_URL?: string;
+  DASHBOARD_PROXY_TOKEN?: string;
+  IMAGES?: {
     input(stream: ReadableStream): {
       transform(options: Record<string, unknown>): {
         output(options: { format: string; quality: number }): Promise<{ response(): Response }>;
@@ -29,7 +31,31 @@ const worker = {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
+    if (url.pathname.startsWith("/api/")) {
+      if (!env.BACKEND_API_BASE_URL) {
+        return Response.json(
+          {
+            status: "FAILED",
+            code: "BACKEND_NOT_CONFIGURED",
+            data: null,
+            errors: [{ message: "Dashboard backend is not configured" }],
+          },
+          { status: 503 },
+        );
+      }
+      const upstreamBase = env.BACKEND_API_BASE_URL.replace(/\/$/, "");
+      const upstreamUrl = new URL(`${upstreamBase}/api/v1${url.pathname.slice(4)}`);
+      upstreamUrl.search = url.search;
+      const headers = new Headers(request.headers);
+      headers.delete("host");
+      if (env.DASHBOARD_PROXY_TOKEN) headers.set("X-Dashboard-Token", env.DASHBOARD_PROXY_TOKEN);
+      const clientIp = request.headers.get("CF-Connecting-IP");
+      if (clientIp) headers.set("CF-Connecting-IP", clientIp);
+      return fetch(new Request(upstreamUrl, { method: request.method, headers, body: request.body, redirect: "manual" }));
+    }
+
     if (url.pathname === "/_vinext/image") {
+      if (!env.IMAGES) return new Response("Image transform binding is unavailable", { status: 503 });
       const allowedWidths = [...DEFAULT_DEVICE_SIZES, ...DEFAULT_IMAGE_SIZES];
       return handleImageOptimization(request, {
         fetchAsset: (path) => env.ASSETS.fetch(new Request(new URL(path, request.url))),

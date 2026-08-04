@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "node scripts/run-vinext.mjs dev",
     "build": "node scripts/run-vinext.mjs build",
-    "build:pages": "next build",
+    "build:pages": "node scripts/run-pages-build.mjs",
     "start": "node scripts/run-vinext.mjs start",
     "test": "npm run build && node --test tests/rendered-html.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",
+    "echarts": "^6.1.0",
     "next": "16.2.6",
     "react": "19.2.6",
     "react-dom": "19.2.6"
